@@ -3,24 +3,43 @@ package guiAssignment;
 import java.util.Arrays;
 
 public class IpAddress {
-	boolean answer = false;
-	int a;
+	boolean answer;
+	int num;
 	int IpLen;
+	int count;
 
 	public boolean checkip(String ipAddress) {
-		String[] ip = ipAddress.split("\\.", 4);
-//		System.out.println(Arrays.toString(ip));
+		String[] ip = ipAddress.split("\\.",4); // Spiting the Ip with FullStop
+		count = 0;
 		for (String i : ip) {
-			IpLen = i.length();
-			System.out.println(IpLen);
-//			a = Integer.valueOf(i);
-////			System.out.println(a);
-//			
-//			if (!(a >= 0 && a <= 255)) {
-//				return answer;
-//			}
+			IpLen = i.length(); // getting the length of each value before the fullstop
+			if (IpLen == 0 || IpLen > 3) {
+				answer = false;
+				return answer;
+			} else {
+				answer = true;
+			}
+
+			try {
+				num = Integer.valueOf(i); // Converting and Ensuring the values are Numbers
+			} catch (NumberFormatException e) {
+				answer = false;
+				return answer;
+			}
+
+			if (num < 0 || num > 255) { // checking if number is between 0-255
+				answer = false;
+				return answer;
+			} else {
+				answer = true;
+			}
+
+			answer = false;
+			count++;
+			if (count == 4) { 		//ensuring there are only three Dots 
+				answer = true;
+			}
 		}
-		
 
 		return answer;
 	}
@@ -28,17 +47,17 @@ public class IpAddress {
 	public static void main(String[] args) {
 
 		IpAddress obj = new IpAddress();
-		obj.checkip("123.2345.255.33"); // false
-		obj.checkip("000.12.12.034"); // True
-		obj.checkip("23.45.12.56"); // True
-		obj.checkip("121.234.12.12"); // True
-//		obj.checkip("00.12.123.123123.123"); //False
-//		obj.checkip("122.23");//False
-//		obj.checkip("Hello.IP"); //False
-//		obj.checkip("I.Am.not.an.ip"); //False
-//		obj.checkip("23.45.22.32."); //False
-//		obj.checkip(".213.123.23.32"); //False
-//		obj.checkip("666.666.23.23"); //False
-//		obj.checkip("000.12.234.23.32"); //False
+		System.out.println(obj.checkip("233.2325.255.33")); // false
+		System.out.println(obj.checkip("000.12.12.034")); // True
+		System.out.println(obj.checkip("23.45.12.56")); // True
+		System.out.println(obj.checkip("121.234.12.12")); // True
+		System.out.println(obj.checkip("00.12.123.123123.123")); //False
+		System.out.println(obj.checkip("122.23"));//False
+		System.out.println(obj.checkip("Hello.IP")); // False
+		System.out.println(obj.checkip("I.Am.not.an.ip")); //False
+		System.out.println(obj.checkip("23.45.22.32.")); //False
+		System.out.println(obj.checkip(".213.123.23.32")); //False
+		System.out.println(obj.checkip("666.666.23.23")); //False
+		System.out.println(obj.checkip("000.12.234.23.32")); //False
 	}
 }
